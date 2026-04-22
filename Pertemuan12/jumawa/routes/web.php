@@ -52,3 +52,18 @@ Route::delete('/hapus/{id}', function ($id) {
 Route::get('/test-method/{id}', function ($id) {
     return view('test-method');
 });
+
+Route::get('/profil', function () {
+    return view('profile');
+});
+
+// Route::get('/detailproduk', function () {
+//     return view('produk.detail');
+// });
+
+Route::get('/detailproduk/{name}', function ($name) {
+    return view('produk.detail', ['product_name' => $name,
+    'id' => 123,
+    'color' => 'red',
+    'stock' => 10]);
+});
