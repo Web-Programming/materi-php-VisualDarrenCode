@@ -61,9 +61,36 @@ Route::get('/profil', function () {
 //     return view('produk.detail');
 // });
 
-Route::get('/detailproduk/{name}', function ($name) {
-    return view('produk.detail', ['product_name' => $name,
-    'id' => 123,
-    'color' => 'red',
-    'stock' => 10]);
+// Route::get('/detailproduk/{name}', function ($name) {
+//     return view('produk.detail', ['product_name' => $name,
+//     'id' => 123,
+//     'color' => 'red',
+//     'stock' => 10]);
+// });
+
+route::get('/produk/', function () {
+    return view('produk.index');
+});
+
+route::get('/produk/create', function () {
+    return view('produk.create');
+});
+
+route::get('/produk/search', function () {
+    return view('produk.search');
+});
+
+route::get('/produk/detail', function () {
+    return view('produk.detail');
+});
+use app\Http\Controllers\ProdukController;
+//php artisan make:controller ProdukController --resource
+route::resource('/produk', ProdukController::class);
+
+
+route::get('/produk/search', [ProdukController::class, '@search');
+
+//php artisan make:controller SupplierController --resource
+route::get('/supplier', function () {
+    return view('supplier.index');
 });
