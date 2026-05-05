@@ -29,23 +29,23 @@
                 </tr>
             </thead>
             <tbody>
-                @for ($i = 1; $i <= count($products); $i++)
+                @foreach ($products as $i => $product)
                     <tr>
-                        <td>{{ $i }}</td>
-                        <td>{{ $products[$i-1]['name'] }}</td>
-                        <td>{{ $products[$i-1]['price'] }}</td>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $product->name }}</td>
+                        <td>{{ $product->price }}</td>
                         <td>
-                            <a href="/produk/{{ $products[$i-1]['id'] }}/edit" class="btn btn-sm btn-primary">Edit</a>
-                            <form action="/produk/{{ $products[$i-1]['id'] }}" method="POST" style="display: inline;">
+                            <a href="/produk/{{ $product->id }}/edit" class="btn btn-sm btn-primary">Edit</a>
+                            <form action="/produk/{{ $product->id }}" method="POST" style="display: inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini?')">Hapus</button>
-                                <a href="{{ url('/produk/' . $products[$i]['id']) }}" class="btn btn-sm btn-info">Detail</a>
-                                <a href="{{ url('/produk/' . $products[$i]['id'] . '/edit') }}" class="btn btn-sm btn-primary">Edit</a>
+                                <a href="{{ url('/products/' . $product->id) }}" class="btn btn-sm btn-info">Detail</a>
+                                <a href="{{ url('/products/' . $product->id . '/edit') }}" class="btn btn-sm btn-primary">Edit</a>
                             </form>
                         </td>
                     </tr>
-                @endfor
+                @endforeach
             </tbody>
         </table>
     </div>

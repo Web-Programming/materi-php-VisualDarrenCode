@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Product;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 class ProductController extends Controller
 {
     /**
@@ -11,13 +11,11 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view('produk.index');
+        
 
-       
+       $title = "Daftar Produk";
         // 1. Bikin data dummy (array multidimensi)
-        $products = [
-          
-        ];
+        $products = DB::select('SELECT * FROM products');
 
         // 2. Return view sekaligus melempar data $products ke Blade
         return view('product.index', compact('products'));
