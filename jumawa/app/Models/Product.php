@@ -9,6 +9,6 @@ class Product extends Model
 
     //jika nama tabel tidak sesuai dengan konvensi
     //maka kita bisa bisa mendefinisikan naa tabel secara eksplisit
-    protected $table = 'products';
+    protected $table = 'produk';
     //
 }

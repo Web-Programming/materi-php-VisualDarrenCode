@@ -24,7 +24,7 @@ class ProductController extends Controller
         //$products = DB::select('SELECT * FROM products'); //cara 2
         $products = DB::table('products')->get(); //cara 3
 
-        return view('products.index', compact('title', 'products'));
+        return view('produk.index', compact('title', 'products'));
         //return view('produk.index', [
         //    'products' => $products, 
         //    'title' => $title
@@ -36,7 +36,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('products.create');
+        return view('produk.create');
     }
 
     /**
@@ -54,7 +54,7 @@ class ProductController extends Controller
     {
         $title = "Detail Produk";
         $product = ['id' => $id, 'name' => 'Monitor', 'price' => 2500000];
-        return view('products.detail', compact('id', 'product', 'title'));
+        return view('produk.detail', compact('id', 'product', 'title'));
     }
 
     /**
@@ -62,7 +62,7 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        return view('products.edit', ['id' => $id]);
+        return view('produk.edit', ['id' => $id]);
     }
 
     /**
@@ -83,6 +83,6 @@ class ProductController extends Controller
 
     function search(Request $request)
     {
-        return view('products.search');
+        return view('Products.search');
     }
 }

@@ -111,10 +111,11 @@ use App\Http\Controllers\ProductController;
 Route::resource('/produk', ProductController::class);
 Route::get('/produk/search', ProductController::class.'@search');
 
-//Supplier
+//Suplier
 // Route::get('/supplier/', function(){
 //     return view('supplier.index');
 // });
 
 //php artisan make:controller SupplierController --resource
+use App\Http\Controllers\SupplierController;
 Route::resource('/supplier', SupplierController::class);

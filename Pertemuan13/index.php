@@ -8,5 +8,5 @@ use app\services\item as serviceItem;
 $produkItem = new produkItem("laptop");
 $serviceItem = new serviceItem("service laptop");
 
-echo "Produk->info();"\n";
-echo $service->info();
+echo "Produk->info();";
+echo $serviceItem->info();
