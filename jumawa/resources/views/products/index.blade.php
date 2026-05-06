@@ -41,21 +41,25 @@
                         </td>
                     </tr>
                 @endfor --}}
-                @foreach (suppliers as $index => $supplier)
+                @foreach ($products as $item)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $supplier->name }}</td>
-                        <td> {{ $supplier->phone }}</td>
-                        <td> {{ $supplier->address }}</td>
+                        <td>{{ $item->name }}</td>
+                        <td>Rp {{ number_format($item->price, 2, ',', '.') }}</td>
                         <td>
-                            <a href="{{ url('/supplier/' . $supplier->id) }}" class="btn btn-sm btn-info">Detail</a>
-                            <a href="{{ url('/supplier/' . $supplier->id . '/edit') }}"
+                            <a href="{{ url('/produk/' . $item->id) }}" class="btn btn-sm btn-info">Detail</a>
+                            <a href="{{ url('/produk/' . $item->id . '/edit') }}"
                                 class="btn btn-sm btn-primary">Edit</a>
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
+    </div>
+    <div class="d-flex justify-content-between align-items-center mt-3">
+        <div>
+            {{$products->links()}}
+        </div>
     </div>
 </div>
 @endsection
