@@ -2,33 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Models\Supplier;
 use Illuminate\Support\Facades\DB;
-class ProductController extends Controller
+
+class SupplierController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $title = "Daftar Produk";
-        // $products = [
-        //     ['id' => 1, 'name' => 'Laptop', 'price' => 7500000],
-        //     ['id' => 2, 'name' => 'Mouse', 'price' => 150000],
-        //     ['id' => 3, 'name' => 'Keyboard', 'price' => 300000],
-        //     ['id' => 4, 'name' => 'Monitor', 'price' => 2500000],
-        // ];
-        
-        //$products = Product::all(); //cara 1
-        //$products = DB::select('SELECT * FROM products'); //cara 2
-        $products = DB::table('products')->get(); //cara 3
+        $title = "Daftar Supplier";
+        $suppliers = Supplier::paginate(5);
 
-        return view('produk.index', compact('title', 'products'));
-        //return view('produk.index', [
-        //    'products' => $products, 
-        //    'title' => $title
-        //]);
+       return view('Supplier.index', compact('suppliers', 'title'));
     }
 
     /**
@@ -36,7 +24,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('produk.create');
+        //
     }
 
     /**
@@ -52,9 +40,13 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        $title = "Detail Produk";
-        $product = ['id' => $id, 'name' => 'Monitor', 'price' => 2500000];
-        return view('produk.detail', compact('id', 'product', 'title'));
+        $supplier = Supplier::findOrFail($id);
+
+        return view('supplier.detail', [
+            'id' => $id,
+            'title' => 'Detail Supplier',
+            'supplier' => $supplier
+        ]);
     }
 
     /**
@@ -62,7 +54,7 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        return view('produk.edit', ['id' => $id]);
+        //
     }
 
     /**
@@ -79,10 +71,5 @@ class ProductController extends Controller
     public function destroy(string $id)
     {
         //
-    }
-
-    function search(Request $request)
-    {
-        return view('Products.search');
     }
 }

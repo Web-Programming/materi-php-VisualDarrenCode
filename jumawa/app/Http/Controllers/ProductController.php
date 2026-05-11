@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
 class ProductController extends Controller
 {
     /**
@@ -13,18 +14,19 @@ class ProductController extends Controller
     public function index()
     {
         $title = "Daftar Produk";
-        $products = [
-            ['id' => 1, 'name' => 'Laptop', 'price' => 7500000],
-            ['id' => 2, 'name' => 'Mouse', 'price' => 150000],
-            ['id' => 3, 'name' => 'Keyboard', 'price' => 300000],
-            ['id' => 4, 'name' => 'Monitor', 'price' => 2500000],
-        ];
-        
+        // $products = [
+        //     ['id' => 1, 'name' => 'Laptop', 'price' => 7500000],
+        //     ['id' => 2, 'name' => 'Mouse', 'price' => 150000],
+        //     ['id' => 3, 'name' => 'Keyboard', 'price' => 300000],
+        //     ['id' => 4, 'name' => 'Monitor', 'price' => 2500000],
+        // ];
+
         //$products = Product::all(); //cara 1
         //$products = DB::select('SELECT * FROM products'); //cara 2
-        $products = DB::table('products')->paginate(5); //cara 3
-
+        //$products = DB::table('products')->get(); //cara 3
+        $products = Product::paginate(10); //cara 4 dengan pagination
         return view('products.index', compact('title', 'products'));
+
         //return view('produk.index', [
         //    'products' => $products, 
         //    'title' => $title
@@ -36,7 +38,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('products.create');
+        return view('produk.create');
     }
 
     /**
@@ -54,7 +56,7 @@ class ProductController extends Controller
     {
         $title = "Detail Produk";
         $product = ['id' => $id, 'name' => 'Monitor', 'price' => 2500000];
-        return view('products.detail', compact('id', 'product', 'title'));
+        return view('produk.detail', compact('id', 'product', 'title'));
     }
 
     /**
@@ -83,6 +85,6 @@ class ProductController extends Controller
 
     function search(Request $request)
     {
-        return view('products.search');
+        return view('produk.search');
     }
 }

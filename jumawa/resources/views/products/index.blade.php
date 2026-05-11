@@ -58,7 +58,7 @@
     </div>
     <div class="d-flex justify-content-between align-items-center mt-3">
         <div>
-            {{$products->links()}}
+            {{ $products->links() }}
         </div>
     </div>
 </div>

@@ -11,16 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('suppliers', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 100);
-            $table->decimal('price', 10, 2);
-            $table->text('description')->nullable();
-            $table->enum('status', ['new', 'used'])->default('new');
-            $table->boolean('is_active')->default(true);
-            
-            $table->date('release_date')->nullable();
-            // menambahkan kolom created_at dan updated_at secara otomatis   
+            $table->string('name', 150);
+            $table->string('phone', 15);
+            $table->text('address')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('suppliers');
     }
 };
