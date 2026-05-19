@@ -38,7 +38,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('produk.create');
+        $title = "Tambah Produk";
+        return view('products.create', compact('title'));
     }
 
     /**
@@ -46,17 +47,37 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $validated = $request->validate([
+            'name' => 'required|string|max:100',
+            'price' => 'required|numeric|min:0',
+            'description' => 'nullable|string',
+            'status' => 'required|in:new,used',
+            'is_active' => 'nullable|boolean',
+            'release_date' => 'nullable|date',]
+        ,[
+            'name.required' => 'Nama produk wajib diisi.',
+            'name.max' => 'Nama produk tidak boleh lebih dari 100 karakter.',
+            'price.required' => 'Harga produk wajib diisi.',
+            'price.numeric' => 'Harga produk harus berupa angka.',
+            'price.min' => 'Harga produk tidak boleh negatif.',
+            'status.required' => 'Status produk wajib diisi.',
+            'status.in' => 'Status produk harus bernilai "new" atau "used".',
+            'release_date.date' => 'Format tanggal rilis tidak valid.',
+        ]);
+    $validated['is_active'] = $request->has('is_active') ? 1 : 0;
+        Product::create($validated);
+        return redirect()->route('products.index')->with('success', 'Produk berhasil ditambahkan.');
 
+    }
+        
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
         $title = "Detail Produk";
-        $product = ['id' => $id, 'name' => 'Monitor', 'price' => 2500000];
-        return view('produk.detail', compact('id', 'product', 'title'));
+        $product = Product::findorfail($id);
+        return view('products.detail', compact('id', 'product', 'title'));
     }
 
     /**
@@ -64,7 +85,9 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        return view('products.edit', ['id' => $id]);
+        $title = "Edit Produk";
+        $product = Product::findorfail($id);
+        return view('products.edit', compact('title', 'product'));
     }
 
     /**

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem P3ST - Terintegrasi</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 1. HALAMAN LOGIN (UC-2) -->
+    <section id="login-page" class="auth-container">
+        <div class="auth-box">
+            <h1>P3ST ♻️</h1>
+            <p>Penjadwalan Penjemputan Sampah Terintegrasi</p>
+            <form id="login-form">
+                <input type="text" id="username" placeholder="Email atau Nomor WA" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <button type="submit" class="btn-main">Masuk</button>
+            </form>
+            <p class="footer-text">Belum punya akun? <a href="#">Daftar (UC-1)</a></p>
+        </div>
+    </section>
+
+    <!-- 2. LAYOUT UTAMA (Setelah Login) -->
+    <div id="main-layout" style="display: none;">
+        <nav>
+            <div class="logo">P3ST</div>
+            <ul id="nav-links">
+                <li onclick="showView('warga')">Warga</li>
+                <li onclick="showView('petugas')">Petugas</li>
+                <li onclick="showView('admin')">Admin</li>
+                <li class="logout" onclick="location.reload()">Keluar</li>
+            </ul>
+        </nav>
+
+        <main class="content">
+            <!-- VIEW WARGA (UC-4, UC-5, UC-6) -->
+            <section id="view-warga" class="view">
+                <div class="stats-grid">
+                    <div class="card"><h4>Total Sampah</h4><p>25 Kg</p></div>
+                    <div class="card"><h4>Reduksi CO2</h4><p>12.5 Kg</p></div>
+                </div>
+                <div class="booking-card">
+                    <h3>Pesan Penjemputan</h3>
+                    <form id="form-booking">
+                        <select id="kategori" onchange="hitungHarga()">
+                            <option value="plastik">Plastik (Rp2.000/kg)</option>
+                            <option value="kertas">Kertas (Rp1.500/kg)</option>
+                            <option value="logam">Logam (Rp5.000/kg)</option>
+                        </select>
+                        <input type="number" id="berat" placeholder="Estimasi Berat (Kg)" oninput="hitungHarga()">
+                        <div class="estimation">Estimasi Pendapatan: <strong id="hasil-harga">Rp0</strong></div>
+                        <button type="submit" class="btn-main">Konfirmasi Jadwal</button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- VIEW PETUGAS (UC-7, UC-8, UC-10) -->
+            <section id="view-petugas" class="view" style="display:none;">
+                <h3>Jadwal Penjemputan Hari Ini</h3>
+                <div class="task-card">
+                    <p><strong>Warga:</strong> Darren (Sekip Jaya)</p>
+                    <button class="btn-opt" onclick="alert('Membuka Google Maps...')">Optimasi Rute (UC-8)</button>
+                    <div class="input-group">
+                        <input type="number" placeholder="Berat Aktual (Kg)">
+                        <button class="btn-confirm">Input Berat (UC-10)</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW ADMIN (UC-13, UC-14) -->
+            <section id="view-admin" class="view" style="display:none;">
+                <h3>Manajemen Katalog Harga</h3>
+                <table class="admin-table">
+                    <tr><th>Jenis</th><th>Harga/Kg</th><th>Aksi</th></tr>
+                    <tr><td>Plastik</td><td><input type="number" value="2000"></td><td><button>Update</button></td></tr>
+                    <tr><td>Logam</td><td><input type="number" value="5000"></td><td><button>Update</button></td></tr>
+                </table>
+                <button class="btn-report">Unduh Laporan Bulanan (UC-14)</button>
+            </section>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

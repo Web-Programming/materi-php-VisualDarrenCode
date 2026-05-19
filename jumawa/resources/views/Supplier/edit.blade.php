@@ -1,6 +1,3 @@
-<div>
-    <!-- He who is contented is rich. - Laozi -->
-</div>
 
 @section('content')
 <div class="container-fluid"></div>

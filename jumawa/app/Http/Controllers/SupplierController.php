@@ -54,8 +54,13 @@ class SupplierController extends Controller
      */
     public function edit(string $id)
     {
-        //
+    // Cari data supplier berdasarkan ID
+    $supplier = Supplier::find($id);
+
+    // Tampilkan ke halaman view edit
+    return view('Supplier.edit', compact('supplier'));
     }
+    
 
     /**
      * Update the specified resource in storage.
