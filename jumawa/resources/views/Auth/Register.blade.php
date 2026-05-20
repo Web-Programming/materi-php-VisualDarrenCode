@@ -11,12 +11,16 @@
 <body class="bg-light">
     <div class="container">
         <div class="row justify-content-center mt-5">
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <div class="card shadow">
-                    <div class="card-header bg-success text-white text-center">
+                    <div class="card-header bg-primary text-white text-center">
                         <h4 class="mb-0">{{ $title }}</h4>
                     </div>
                     <div class="card-body p-4">
+                        {{-- Tampilkan pesan sukses (setelah register) --}}
+                        @if (session('success'))
+                            <div class="alert alert-success">{{ session('success') }}</div>
+                        @endif
                         {{-- Tampilkan error validasi --}}
                         @if ($errors->any())
                             <div class="alert alert-danger">
@@ -25,22 +29,13 @@
                                 @endforeach
                             </div>
                         @endif
-                        <form action="{{ url('/register') }}" method="POST">
+                        <form action="{{ url('/login') }}" method="POST">
                             @csrf
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Nama Lengkap</label>
-                                <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                    id="name" name="name" value="{{ old('name') }}"
-                                    placeholder="Masukkan nama lengkap" required autofocus>
-                                @error('name')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
                                 <input type="email" class="form-control @error('email') is-invalid @enderror"
                                     id="email" name="email" value="{{ old('email') }}"
-                                    placeholder="nama@email.com" required>
+                                    placeholder="nama@email.com" required autofocus>
                                 @error('email')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -48,23 +43,22 @@
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
                                 <input type="password" class="form-control @error('password') is-invalid @enderror"
-                                    id="password" name="password" placeholder="Minimal 6 karakter" required>
+                                    id="password" name="password" placeholder="Masukkan password" required>
                                 @error('password')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="mb-3">
-                                <label for="password_confirmation" class="form-label">Konfirmasi Password</label>
-                                <input type="password" class="form-control" id="password_confirmation"
-                                    name="password_confirmation" placeholder="Ulangi password" required>
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                                <label class="form-check-label" for="remember">Ingat Saya</label>
                             </div>
                             <div class="d-grid">
-                                <button type="submit" class="btn btn-success">Daftar</button>
+                                <button type="submit" class="btn btn-primary">Login</button>
                             </div>
                         </form>
                     </div>
                     <div class="card-footer text-center text-muted">
-                        Sudah punya akun? <a href="{{ url('/login') }}">Login di sini</a>
+                        Belum punya akun? <a href="{{ url('/register') }}">Daftar di sini</a>
                     </div>
                 </div>
             </div>

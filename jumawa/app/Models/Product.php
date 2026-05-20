@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use app\policies\ProductPolicy;
+use illuminate\Database\Eloquent\attributes\usePolicy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 

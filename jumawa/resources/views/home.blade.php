@@ -1,80 +1,122 @@
-<!DOCTYPE html>
-<html lang="id">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Selamat Datang - Aplikasi Penjualan</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-</head>
-
-<body class="bg-light">
-    <nav class="navbar navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="/"><i class="bi bi-shop me-2"></i>Aplikasi Penjualan</a>
-            <div>
-                @auth
-                    <a href="{{ url('/dashboard') }}" class="btn btn-outline-light btn-sm me-2">Dashboard</a>
-                @else
-                    <a href="{{ url('/login') }}" class="btn btn-outline-light btn-sm me-2">Login</a>
-                    <a href="{{ url('/register') }}" class="btn btn-light btn-sm">Daftar</a>
-                @endauth
-            </div>
-        </div>
-    </nav>
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-8 text-center">
-                @if (session('success'))
-                    <div class="alert alert-success">{{ session('success') }}</div>
-                @endif
-                <i class="bi bi-shop display-1 text-primary"></i>
-                <h1 class="mt-3 fw-bold">Aplikasi Penjualan</h1>
-                <p class="lead text-muted mt-2">Kelola data barang, pesanan, dan laporan penjualan dengan mudah.</p>
-                <div class="mt-4 d-flex justify-content-center gap-3">
-                    @auth
-                        <a href="{{ url('/dashboard') }}" class="btn btn-primary btn-lg">
-                            <i class="bi bi-speedometer2 me-2"></i>Masuk ke Dashboard
-                        </a>
-                    @else
-                        <a href="{{ url('/login') }}" class="btn btn-primary btn-lg">
-                            <i class="bi bi-box-arrow-in-right me-2"></i>Login
-                        </a>
-                        <a href="{{ url('/register') }}" class="btn btn-outline-primary btn-lg">
-                            <i class="bi bi-person-plus me-2"></i>Daftar Akun
-                        </a>
-                    @endauth
+@extends('app.master')
+@section('title', 'Dashboard')
+@section('sidebar')
+    @parent
+@endsection
+@section('content')
+    <div class="mt-4 mb-3">
+        <h1>Dashboard</h1>
+        <p class="text-muted">Selamat datang, <strong>{{ Auth::user()->name ?? 'Tamu' }}</strong>!</p>
+    </div>
+    {{-- Kartu Statistik --}}
+    <div class="row g-3 mb-4">
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm text-white bg-primary">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="fs-2 fw-bold">{{ $totalBarang }}</div>
+                        <div>Total Barang</div>
+                    </div>
+                    <i class="bi bi-box-seam fs-1 opacity-50"></i>
+                </div>
+                <div class="card-footer bg-primary border-0">
+                    <a href="{{ url('/barang') }}" class="text-white text-decoration-none small">
+                        Lihat semua &rarr;
+                    </a>
                 </div>
             </div>
         </div>
-        <div class="row mt-5 g-4">
-            <div class="col-md-4">
-                <div class="card h-100 border-0 shadow-sm text-center p-4">
-                    <i class="bi bi-box-seam display-5 text-primary mb-3"></i>
-                    <h5>Manajemen Barang</h5>
-                    <p class="text-muted">Tambah, edit, dan hapus data barang dengan cepat dan mudah.</p>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm text-white bg-success">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="fs-2 fw-bold">{{ $barangTersedia }}</div>
+                        <div>Barang Tersedia</div>
+                    </div>
+                    <i class="bi bi-check-circle fs-1 opacity-50"></i>
+                </div>
+                <div class="card-footer bg-success border-0">
+                    <a href="{{ url('/barang') }}" class="text-white text-decoration-none small">
+                        Lihat semua &rarr;
+                    </a>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card h-100 border-0 shadow-sm text-center p-4">
-                    <i class="bi bi-receipt display-5 text-success mb-3"></i>
-                    <h5>Data Pesanan</h5>
-                    <p class="text-muted">Pantau seluruh transaksi dan pesanan secara real-time.</p>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm text-white bg-danger">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="fs-2 fw-bold">{{ $barangHabis }}</div>
+                        <div>Barang Habis</div>
+                    </div>
+                    <i class="bi bi-x-circle fs-1 opacity-50"></i>
+                </div>
+                <div class="card-footer bg-danger border-0">
+
+                    <a href="{{ url('/barang') }}" class="text-white text-decoration-none small">
+                        Lihat semua &rarr;
+                    </a>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card h-100 border-0 shadow-sm text-center p-4">
-                    <i class="bi bi-file-earmark-bar-graph display-5 text-warning mb-3"></i>
-                    <h5>Laporan Penjualan</h5>
-                    <p class="text-muted">Lihat ringkasan dan analisis laporan penjualan bulanan.</p>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm text-white bg-warning">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="fs-2 fw-bold">{{ $nilaiStok }}</div>
+                        <div>Total Nilai Stok</div>
+                    </div>
+                    <i class="bi bi-currency-dollar fs-1 opacity-50"></i>
+                </div>
+                <div class="card-footer bg-warning border-0">
+                    <span class="text-white small">Nilai total inventori</span>
                 </div>
             </div>
         </div>
     </div>
-    <footer class="text-center text-muted mt-5 py-4 border-top">
-        &copy; {{ date('Y') }} Aplikasi Penjualan. All rights reserved.
-    </footer>
-</body>
+    {{-- Tabel Barang Terbaru --}}
+    <div class="card shadow-sm">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">5 Barang Terbaru</h5>
+            <a href="{{ url('/barang/create') }}" class="btn btn-primary btn-sm">
+                <i class="bi bi-plus-lg me-1"></i>Tambah Barang
+            </a>
+        </div>
+        <div class="card-body p-0">
+            <table class="table table-hover mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Nama Barang</th>
+                        <th>Deskripsi</th>
+                        <th>Harga</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse ($barangTerbaru as $barang)
+                        <tr>
+                            <td>{{ $barang->name }}</td>
+                            <td>{{ $barang->description }}</td>
+                            <td>Rp {{ number_format($barang->price, 0, ',', '.') }}</td>
+                            <td>
+                                @if ($barang->is_active)
+                                    <span class="badge bg-success">Tersedia</span>
+                                @else
+                                    <span class="badge bg-danger">Habis</span>
+                                @endif
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="4" class="text-center text-muted py-3">Belum ada data barang.</td>
 
-</html>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer text-end">
+            <a href="{{ url('/produk') }}" class="btn btn-outline-primary btn-sm">Lihat Semua Barang</a>
+        </div>
+    </div>
+@endsection

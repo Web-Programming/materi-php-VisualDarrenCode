@@ -52,6 +52,7 @@
                     <i class="bi bi-x-circle fs-1 opacity-50"></i>
                 </div>
                 <div class="card-footer bg-danger border-0">
+
                     <a href="{{ url('/barang') }}" class="text-white text-decoration-none small">
                         Lihat semua &rarr;
                     </a>
@@ -86,7 +87,7 @@
                 <thead class="table-light">
                     <tr>
                         <th>Nama Barang</th>
-                        <th>Jumlah</th>
+                        <th>Deskripsi</th>
                         <th>Harga</th>
                         <th>Status</th>
                     </tr>
@@ -94,11 +95,11 @@
                 <tbody>
                     @forelse ($barangTerbaru as $barang)
                         <tr>
-                            <td>{{ $barang->nama_barang }}</td>
-                            <td>{{ $barang->jumlah }}</td>
-                            <td>Rp {{ number_format($barang->harga, 0, ',', '.') }}</td>
+                            <td>{{ $barang->name }}</td>
+                            <td>{{ $barang->description }}</td>
+                            <td>Rp {{ number_format($barang->price, 0, ',', '.') }}</td>
                             <td>
-                                @if ($barang->status)
+                                @if ($barang->is_active)
                                     <span class="badge bg-success">Tersedia</span>
                                 @else
                                     <span class="badge bg-danger">Habis</span>
@@ -108,14 +109,14 @@
                     @empty
                         <tr>
                             <td colspan="4" class="text-center text-muted py-3">Belum ada data barang.</td>
+
                         </tr>
                     @endforelse
                 </tbody>
             </table>
         </div>
         <div class="card-footer text-end">
-            <a href="{{ url('/barang') }}" class="btn btn-outline-primary btn-sm">Lihat Semua Barang</a>
+            <a href="{{ url('/produk') }}" class="btn btn-outline-primary btn-sm">Lihat Semua Barang</a>
         </div>
     </div>
 @endsection
-
